@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "FB Business Helper",
+  "version": "1.0.0",
+  "description": "Description",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://*.facebook.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "css": ["content.css"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,78 @@
+/* Thanh công cụ floating toolbar */
+#fb-tools-toolbar {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+}
+
+/* Kiểu dáng cho từng nút bấm */
+.fb-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fb-tool-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Mau sắc riêng cho từng chức năng */
+.btn-blue {
+  background-color: #e7f3ff;
+  color: #1877f2;
+}
+.btn-yellow {
+  background-color: #fff9e6;
+  color: #d97706;
+}
+.btn-green {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+.btn-purple {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+.btn-red {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Nút đóng thanh công cụ */
+.fb-tool-close {
+  background: transparent;
+  border: none;
+  color: #65676b;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+}
+
+.fb-tool-close:hover {
+  background-color: #f0f2f5;
+}
