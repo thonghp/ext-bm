@@ -82,9 +82,241 @@
 
     ////////////////////////////////////////// đoạn 1  /////////////////////////////////////////////////////////////////////////////////////////////
 
-    toolbar.querySelector("#btn-feature-1").onclick = () => {
-      menu.classList.remove("show");
-    };
+    toolbar
+      .querySelector("#btn-feature-1")
+      .addEventListener("click", async () => {
+        //code lấy id WhatsApp / ig / page
+        let uid =
+          (typeof require === "function" &&
+            require("CurrentUserInitialData")?.USER_ID) ||
+          (typeof document !== "undefined" &&
+            document.cookie.match(/c_user=([0-9]+)/)?.[1]);
+        let bm_id = document.location.href.match(/business_id=([0-9]+)/)[1];
+
+        let flowsessionid =
+          "upl_wizard_1734543431056_6812b4a3-db58-45df-903a-49b8ad9b8dc5";
+        let sessionid =
+          "upl_1734543431056_c9e8f60b-00fb-4e2f-ac4d-9198ee0d0129";
+        let external_flow_id = "bf1f769a-5b48-4137-ba40-a98fee28d7c5";
+
+        let headers = {
+          accept: "*/*",
+          "accept-language":
+            "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
+          "cache-control": "no-cache",
+          origin: "https://business.facebook.com",
+          pragma: "no-cache",
+          priority: "u=1, i",
+          referer:
+            "https://business.facebook.com/latest/settings/mv4b?business_id=" +
+            bm_id,
+          "sec-ch-prefers-color-scheme": "dark",
+          "sec-ch-ua":
+            '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+          "sec-ch-ua-full-version-list":
+            '"Google Chrome";v="131.0.6778.140", "Chromium";v="131.0.6778.140", "Not_A Brand";v="24.0.0.0"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-model": '""',
+          "sec-ch-ua-platform": '"Windows"',
+          "sec-ch-ua-platform-version": '"15.0.0"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "x-asbd-id": "129477",
+          "x-bh-flowsessionid": flowsessionid,
+          "x-fb-friendly-name":
+            "BusinessCometBizSuiteSettingsMV4BPaymentHooksCreateMV4BAccountMutation",
+          "x-fb-lsd": "caB8oCa1XXUs5upx5hhmzd",
+          "x-fb-upl-sessionid": sessionid,
+        };
+
+        let match =
+          document.cookie.match(/m_ts=[^;]+/) ||
+          document.body.innerHTML.match(
+            /["']DTSGInitialData["'],\s*\[\s*\],\s*\{\s*["']token["']:\s*["']([^"']+)["']/,
+          );
+        let fb_dtsg = match[1];
+
+        // // bi cho nay
+        headers["x-fb-friendly-name"] =
+          "BusinessCometBizSuiteSettingsMV4BOnboardingViewContainerQuery";
+        let response = await fetch(
+          "https://business.facebook.com/api/graphql/?_callFlowletID=0&_triggerFlowletID=3650",
+          {
+            method: "POST",
+            headers: headers,
+            body: new URLSearchParams({
+              av: uid,
+              __usid: "6-Tsop9861gs3l1g:Psopa9tjw72v8:0-Asop90r1lonyqp-RV=6:F=",
+              __aaid: "0",
+              __bid: bm_id,
+              __user: uid,
+              __a: "1",
+              __req: "o",
+              __hs: "20075.HYP:bizweb_comet_pkg.2.1.0.0.0",
+              dpr: "1",
+              __ccg: "EXCELLENT",
+              __rev: "1018964480",
+              __s: "kacawy:oqaeu0:lpl2ue",
+              __hsi: "7449807280932121375",
+              __dyn:
+                "7xeUmxa2C6onwkECbwKBAgc9o9E6u5U4e1ZyUW3qi4EowNwnof8bo2fw9m2Kcx60DU1LVEK12wvk1bwdu2O1VwBwXwEwgo9oO0n29DwnU6a3a1YwBgao6C1uwoE2sx2365E5afK2W1Qxe2GewGwxwjU88brwmEiwm8W4-1ezo661dxiEC3a0hqfwLCyKbw46wbS1LwTwNAK2q0z8co9U4S7E6C13www4kxW1owmUaE2mwww",
+              __csr:
+                "hZNcdRbvOih4QIA9FaNsSnbnhcnWh4NvGCRQnkBQCmCTkJB8VeBtb-hZszOrRVdttoBCCZ4hRvJ4WLpeJkHtbAEKVaALhnWipKngNeRAWtb-8CiYCHqQQp5POKqHxiJulKmF8KV9J12qq8Fvh8F3r8ZeKqFbCF3ECGAhXABQWyvybiWhmiHheWBHjjDzfXFump2rF13hCF9ogDK9K6uWyKF4UNaFAubA-b8icKmm4K58FvyGKXKmim2-UK5-48kKudzEWUGmaxeeyU9EK4UsAx6m9Axm4EGbzSi4oO3-58tVd0wx6fxC2mcy84bwOxOegC58gwlU9ob8aEb8d80onChVppu2iFaw1e9waC24aVxywlk1n1_2MfE4x1O05JU25w7wBKaCg7yE26G047U6KWwio0BiE2gxO1Aw6qHg7ev4a4A5t08u0l4E07rS01g4DO06fBojU0GK0rKlU0FB0jA04RE0tQ83C59ngy2u1hwYwaqax63-0baw0ANwFzcw0bkUd405QolS0uG0qm04l9U0Mygw1fk056pA5y04exm1mg0O20hQwf866",
+              __comet_req: "11",
+              fb_dtsg: fb_dtsg,
+              jazoest: "25400",
+              lsd: "caB8oCa1XXUs5upx5hhmzd",
+              __spin_r: "1018964480",
+              __spin_b: "trunk",
+              __spin_t: "1734543424",
+              __jssesw: "1",
+              fb_api_caller_class: "RelayModern",
+              fb_api_req_friendly_name:
+                "BusinessCometBizSuiteSettingsMV4BOnboardingViewContainerQuery",
+              variables:
+                '{"assetTypes":["WHATSAPP_BUSINESS_ACCOUNT","INSTAGRAM_ACCOUNT_V2","PAGE"],"businessID":"' +
+                bm_id +
+                '","maxNumBizAssetsFetched":30}',
+              server_timestamps: "true",
+              doc_id: "8964949296882778",
+            }),
+          },
+        );
+        let result = await response.json();
+
+        /// duyệt mảng tim ra ten id và tên page /ws
+        let instagramAssets = [];
+        let pageAssets = [];
+        let whatsappAssets = [];
+
+        let edges = result.data.business.connected_objects.edges;
+
+        edges.forEach((edge) => {
+          let node = edge.node;
+
+          // 1. Xử lý Instagram Account
+          if (node.business_asset_type === "INSTAGRAM_ACCOUNT_V2") {
+            let igName = node.business_object_name;
+            let igId =
+              node.if_viewer_can_manage_permissions_via_business?.ig_asset_id;
+
+            if (igName && igId) {
+              // Dùng dấu cộng (+) để nối chuỗi thay cho backtick
+              instagramAssets.push([igName, igId]);
+            }
+          }
+
+          // 2. Xử lý Facebook Page
+          else if (node.business_asset_type === "PAGE") {
+            let pageName = node.business_object_name;
+            let pageId = node.business_object_id;
+
+            if (pageName && pageId) {
+              // Dùng dấu cộng (+) để nối chuỗi
+              pageAssets.push([pageName, pageId]);
+            }
+          }
+
+          // 3. Xử lý WhatsApp Business Account
+          else if (node.business_asset_type === "WHATSAPP_BUSINESS_ACCOUNT") {
+            if (
+              node.mv4b_whatsapp_business_assets &&
+              node.mv4b_whatsapp_business_assets.length > 0
+            ) {
+              let waAsset = node.mv4b_whatsapp_business_assets[0];
+              let waName = waAsset.name;
+              let waId = waAsset.whatsapp_business_asset_id;
+
+              if (waName && waId) {
+                // Dùng dấu cộng (+) để nối chuỗi
+                whatsappAssets.push([waName, waId]);
+              }
+            }
+          }
+        });
+
+        // --- 2. HIỂN THỊ POPUP ---
+        document.getElementById("fb-assets-popup")?.remove();
+
+        // Render mỗi dòng: Ô input hiển thị "Tên - ID", nút Copy chỉ giữ ID (item[1])
+        const renderRow = (item) => {
+          let [name, id] = item; // Tách phần tử 1 (name) và phần tử 2 (id)
+          return `
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <input value="${name} - ${id}" readonly
+            style="flex:1;padding:8px 10px;font-size:13px;border:1px solid #ccc;border-radius:8px;background:#f9fafb;">
+          <button class="fb-copy-asset-btn" data-text="${id}" title="Copy ID: ${id}"
+            style="width:42px;background:#1877F2;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;flex-shrink:0;">
+            📋
+          </button>
+        </div>
+      `;
+        };
+
+        // Gom nhóm danh sách
+        const renderGroup = (title, list) => {
+          if (!list || list.length === 0) return "";
+          return `
+        <div style="margin-bottom:12px;">
+          <div style="font-weight:bold;font-size:13px;color:#4b5563;margin-bottom:6px;">
+            ${title} (${list.length})
+          </div>
+          ${list.map((item) => renderRow(item)).join("")}
+        </div>
+      `;
+        };
+
+        const hasData =
+          pageAssets.length || instagramAssets.length || whatsappAssets.length;
+
+        const popup = document.createElement("div");
+        popup.id = "fb-assets-popup";
+        popup.innerHTML = `
+      <div style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:9999999;">
+        <div style="background:#fff;border-radius:12px;padding:20px;width:380px;max-height:80vh;display:flex;flex-direction:column;font-family:Arial;box-shadow:0 10px 30px rgba(0,0,0,.3);">
+          <h3 style="margin:0 0 15px;font-size:18px;color:#111827;">📂 Danh sách Tài khoản / Assets</h3>
+
+          <div style="flex:1;overflow-y:auto;padding-right:4px;">
+            ${renderGroup("📄 Facebook Pages", pageAssets)}
+            ${renderGroup("📸 Instagram Accounts", instagramAssets)}
+            ${renderGroup("💬 WhatsApp Accounts", whatsappAssets)}
+
+            ${!hasData ? '<p style="text-align:center;color:#6b7280;font-size:14px;margin:20px 0;">Không tìm thấy tài khoản nào.</p>' : ""}
+          </div>
+
+          <button id="fb-close-assets"
+            style="width:100%;margin-top:14px;padding:10px;background:#e5e7eb;border:none;border-radius:8px;cursor:pointer;font-weight:bold;color:#374151;">
+            Đóng
+          </button>
+        </div>
+      </div>
+    `;
+
+        document.body.appendChild(popup);
+
+        // --- 3. BẮT SỰ KIỆN COPY & ĐÓNG POPUP ---
+
+        // Nút Copy 📋 chỉ lấy giá trị trong data-text (chứa ID)
+        popup.querySelectorAll(".fb-copy-asset-btn").forEach((btn) => {
+          btn.onclick = async function () {
+            let idToCopy = this.getAttribute("data-text");
+            await navigator.clipboard.writeText(idToCopy);
+
+            this.textContent = "✅";
+            setTimeout(() => (this.textContent = "📋"), 1000);
+          };
+        });
+
+        // Đóng Popup
+        popup.querySelector("#fb-close-assets").onclick = () => popup.remove();
+
+        popup.firstElementChild.onclick = (e) => {
+          if (e.target === popup.firstElementChild) popup.remove();
+        };
+      });
 
     /////////////////////////////////   thoát bm ////////////////////////////////////////////////////////////////////////////////////////////////
 
